@@ -1,5 +1,4 @@
 import election from './Election.json'
-
-export const CONTRACTADDRESS = "0x4e39Cd77751EEA907a3AB79d09993354fD185849"
-export const OWNERADDRESS = "0x0Ec77439b30d69eA56e653ad55D9C4B66aD07ff0"
-export const ELECTIONABI = election.abi
+export const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+export const ownerAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+export const electionABI = election.abi;

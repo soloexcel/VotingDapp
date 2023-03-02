@@ -8,7 +8,7 @@ const registerVoters = () => {
 
     const [voterAddr, setVoterAddr] = useState('')
 
-    // const { registerVoter } = useContext(ElectionContext)
+    const { registerVoter } = useContext(ElectionContext)
 
     // get the input 
     const onChangeHandler = (e) => {
@@ -19,7 +19,7 @@ const registerVoters = () => {
     <div className={Style.registerVoter}> 
         <div className={Style.registerfield}>
             <input className={Style.input} type="text" placeholder="Register Voter" onChange={onChangeHandler} value={voterAddr} />
-            <Button btnName='Register' handleClick={() => {}}/>
+            <Button btnName='Register' handleClick={registerVoter}/>
         </div>
 
         <div className={Style.registeredVoter}>
@@ -29,5 +29,6 @@ const registerVoters = () => {
     </div>
   )
 }
+
 
 export default registerVoters

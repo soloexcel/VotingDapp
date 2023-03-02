@@ -13,7 +13,7 @@
     
 
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: column;
 }
 
@@ -61,13 +61,13 @@
     width: 60%;
     margin: 32px auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
 
 
-.time .startTime {
+.time .dnt {
     /* width: 50%;  */
     padding: 1.2rem;
     border-top: none;
@@ -77,16 +77,6 @@
     outline: none;
 }
 
-
-.time .endTime {
-    /* width: 50%;  */
-    padding: 1.2rem;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: 1px solid gray;
-    outline: none;
-}
 
 .button {
     

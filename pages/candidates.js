@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Style from '../styles/candidate.module.css';
 import { Button, CandidateTable } from '../components/componentsIndex';
+import { ElectionContext } from '../context/Context';
+
 
 const Candidate = () => {
   const [shortlistname, setShortlistname] = useState('');
   const [reviewItem, setReviewItem] = useState([]);
   const [startDate, setStartDate] = useState('')
+  const [startTime, setstartTime] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [errorMsg, setErrorMsg] = useState("")
-  const [displayMsg,setDisplayMsg] = useState(false);
+  const [endTime, setEndTime] = useState('')
   const [dnt, setDnt] = useState([])
   const [isCandidateListed, setIsCandidateListed] = useState(false)
   // const [submitButton, setSubmitButon] = useState(false)
 
+  const { candidates } = useContext(ElectionContext)
   
   const onChangeHandler = (e) => {
     setShortlistname(e.target.value);
@@ -21,45 +24,60 @@ const Candidate = () => {
   const shortlistHandler = () => {
     setReviewItem([...reviewItem, shortlistname]);
     setShortlistname('');
+    console.log(reviewItem)
   };
 
 
   const startDatehandler = (e) => {
     setStartDate(e.target.value);
-    setDnt()
     console.log(startDate)
-
   }
 
+  const startTimehandler = (e) => {
+    setstartTime(e.target.value);
+    console.log(startTime)
+  }
+  
   const endDatehandler = (e) => {
     setEndDate(e.target.value);
     console.log(endDate)
-
   }
 
+  const endTimehandler = (e) => {
+    setEndTime(e.target.value);
+    console.log(startTime)
+  }
 
-  const isValidstartDate = (startDate) => {
+  const isValidStartDate = (startDate) => {
     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
     return re.test(String(startDate).toLowerCase());
-
 }
 
-const isValidendDate = (endDate) => {
+const isValidEndDate = (endDate) => {
   const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
   return re.test(String(endDate).toLowerCase());
 }
 
+const isValidStartTime = (startTime) => {
+  const re = /((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/;
+  return re.test(String(startTime).toLowerCase());
+}
+const isValidEndTime = (endTime) => {
+  const re = /((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/;
+  return re.test(String(endTime).toLowerCase());
+}
+
 
   // //
-  const dateHandler = () => {
-    if (startDate === "" || endDate === ""){
-      setErrorMsg("You are required to provide a valid date.")
-    }else if (!isValidstartDate(startDate) || !isValidendDate(endDate)) {
-      setErrorMsg("Provide a valid date and time in this format: 3/1/2023");
-    } else {setErrorMsg("Continue to the review section.");}
+  const dateTimeHandler = () => {
+    if (startDate === "" || endDate === "" || startTime === "" || endTime === ""){
+      alert("You are required to provide a valid date and time.")
+    }else if (!isValidStartDate(startDate) || !isValidEndDate (endDate) || !isValidStartTime(startTime) || !isValidEndTime (endTime)) {
+      alert("Provide a valid date and time in this format: DATE: 1/1/1111 TIME: 1:00 PM");
+    } else {alert("Continue to the review section.");}
     // setStartDate("");
     // setEndDate("");
-    setDisplayMsg(true);
+    
   }
 
   // cancel button
@@ -68,8 +86,8 @@ const isValidendDate = (endDate) => {
     setReviewItem([])
     setStartDate('')
     setEndDate('')
-    setErrorMsg('')
-    setDisplayMsg(false)
+    setstartTime('')
+    setEndTime('')
   }
 
   // submit button
@@ -80,6 +98,11 @@ const isValidendDate = (endDate) => {
     else {
       // call the async function from the context file to submit to the blockchain.
       // and display the candidates
+      const votingStartTime = startDate.concat(startTime);
+      const votingEndTime = endDate.concat(endTime);
+      const minVotes = 2
+
+      candidates({reviewItem, votingStartTime, votingEndTime, minVotes})
       setIsCandidateListed(true)
     }
   }
@@ -104,13 +127,23 @@ const isValidendDate = (endDate) => {
           </div>
   
           <div className={Style.time}>
-            <input className={Style.startTime} type="text" placeholder="Vote Start Date and Time" value={startDate} onChange={startDatehandler} />
-            <input className={Style.endTime} type="text" placeholder="Vote End Date and Time" value={endDate} onChange={endDatehandler} />
+            <div>
+                <input className={Style.dnt} type="text" placeholder="Vote Start Date" value={startDate} onChange={startDatehandler} />
+                
+                  <input className={Style.dnt} type="text" placeholder="Vote End Date" value={endDate} onChange={endDatehandler} />
+            </div>
+
+            <div>
+                  <input className={Style.dnt} type="text" placeholder="Vote Start Time" value={startTime} onChange={startTimehandler} />
+
+                  <input className={Style.dnt} type="text" placeholder="Vote End Time" value={endTime} onChange={endTimehandler} />
+                  
+            </div>
   
-            <Button className={Style.button} btnName="Ok" handleClick={dateHandler} />  
+            <Button className={Style.button} btnName="Ok" handleClick={dateTimeHandler} />  
           </div>
           <p className={Style.errorMsg}>
-          {displayMsg && <p>{errorMsg}</p>}
+
           </p>
           </div>
   
@@ -132,11 +165,11 @@ const isValidendDate = (endDate) => {
   
           <div className={Style.dnt}>
             <p>
-              Start-Date: {startDate}
+              Start-Date-Time:  {startDate} {startTime}
             </p>
   
             <p>
-              End-Date: {endDate}
+              End-Date-Time:  {endDate} {endTime}
             </p>
           </div>
   

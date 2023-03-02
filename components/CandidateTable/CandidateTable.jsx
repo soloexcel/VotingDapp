@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button } from '../componentsIndex';
 import Style from './CandidateTable.module.css'
+import { ElectionContext } from '../../context/Context';
 
 const CandidateTable = ({ shortlistedNames }) => {
+
+  const { castVote } = useContext(ElectionContext)
   return (
     <table className={Style.table}>
       <thead>
@@ -15,7 +18,7 @@ const CandidateTable = ({ shortlistedNames }) => {
         {shortlistedNames.map((name, index) => (
           <tr key={index}>
             <td className={Style.tableData}>{name}</td>
-            <td className={Style.tableData}><Button btnName='Vote' handleClick={() => { /* handle vote */ }}/></td>
+            <td className={Style.tableData}><Button btnName='Vote' handleClick={() => { castVote }}/></td>
           </tr>
         ))}
       </tbody>
