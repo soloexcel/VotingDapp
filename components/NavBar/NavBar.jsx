@@ -2,16 +2,35 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Button } from '../componentsIndex'
 import Style from './NavBar.module.css'
 import { ElectionContext } from '../../context/Context'
+import Link from 'next/link'
 
 const NavBar = () => {
 const { connectWallet, walletAddr } = useContext(ElectionContext)
 const [buttonConnected, setButtonConnected] = useState(false)
-const [status, setStatus] = useState('Connect')    
-// handle click to manage 
-// const handleClick = () => {
-//     // if the metamask is connected, update the button to 'connected' 
-//     // else 'connect'
-// }
+  
+
+const itemsArray = [
+  {
+    item: "Candidates",
+    link: "candidates"
+  },
+
+  {
+    item: "Register Voters",
+    link: "register-voters"
+  },
+
+  {
+    item: "Cast Vote",
+    link: "cast-vote"
+  },
+
+  {
+    item: "Result",
+    link: "result"
+  }
+]
+
 
   return (
     <div className={Style.navbar}>
@@ -19,10 +38,18 @@ const [status, setStatus] = useState('Connect')
             PROWESS
         </p>
 
-        <Button btnName={walletAddr && walletAddr.length > 0 ? `Connected: ${walletAddr.substring(0, 5)}...${walletAddr.substring(40)}` : "Connect"} handleClick={connectWallet} />
-        {/* <p>
-          Address: {walletAddr}
-        </p> */}
+        <div className={Style.items}>
+          {itemsArray.map((el, i) => (
+            <div key={i + 1} className={Style.item}>
+              <Link href={{ pathname: `${el.link}` }}>{el.item}</Link> 
+            </div>
+          ))}
+        </div>
+
+        <div className= {Style.button}>
+            <Button btnName={walletAddr && walletAddr.length > 0 ? "Connected" : "Connect"} handleClick={connectWallet} />
+        </div>
+        
     </div>
   )
 }

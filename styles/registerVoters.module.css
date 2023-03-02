@@ -1,0 +1,38 @@
+.registerVoter {
+
+    border: 1px solid red;
+    height: 51.5vh;
+    margin: 32px auto;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.registerfield {
+    width: 50%;
+    border: 1px solid yellow;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.registerfield .input {
+    width: 60%;
+    padding: 1.2rem;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+}
+
+.registeredVoter {
+    width: 20%;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.registeredVoter h4 {
+    color: rgb(138, 132, 132);
+    padding: 1rem;
+}

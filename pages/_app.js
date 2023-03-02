@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { ContextProvider } from '../context/Context'
-import { NavBar, Footer } from '../components/componentsIndex'
+import { NavBar, Footer, Status } from '../components/componentsIndex'
 
 const MyApp = ({ Component, pageProps }) => (
   <ContextProvider>
@@ -9,6 +9,7 @@ const MyApp = ({ Component, pageProps }) => (
       <div>
         <Component {...pageProps} />
       </div>
+      <Status />
       <Footer />
     </div>
   </ContextProvider>
